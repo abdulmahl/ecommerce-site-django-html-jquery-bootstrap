@@ -29,7 +29,7 @@
               Sale
             </div>
             <div
-              class="d-flex justify-content-center small text-warning mb-2"
+              class="d-flex justify-content-start small text-warning mb-2"
               style="text-align: start"
             >
               <div class="bi-star-fill"></div>
@@ -40,7 +40,21 @@
             <!-- Product price-->
             <div class="price" style="text-align: start">
               <strike> R {{ product.price }} </strike>
-              &nbsp; R {{ product.sale_price }}
+              &nbsp; R {{ product.sale_price }} 
+            <br> <br> 
+            <div class="row justify-content-start">
+              <div class="col-md-2">Qty:</div>
+              <div class="col-md-4">
+                <select class="form-select form-select-sm" id="qty-cart">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+              </div>
+          </div>
+
             </div>
           </div>
 
@@ -62,15 +76,42 @@
           <!-- Product price-->
           <div class="price" style="text-align: start">
             <strike> R {{ product.price}} </strike>
-            &nbsp; R {{ product.half_price}}
+            &nbsp; R {{ product.half_price}} 
+            <br> <br> 
+            <div class="row justify-content-start">
+              <div class="col-md-2">Qty:</div>
+              <div class="col-md-4">
+                <select class="form-select form-select-sm" id="qty-cart">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+              </div>
+          </div>
           </div>
         </div>
 
         {% else %}
-        <div class="price" style="text-align: start;">R {{ product.price }}</div>
+        <div class="price" style="text-align: start;">R {{ product.price }} 
+        <br> <br> 
+        <div class="row justify-content-start">
+          <div class="col-md-2">Qty:</div>
+          <div class="col-md-4">
+            <select class="form-select form-select-sm" id="qty-cart">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+          </div>
+      </div>
+      </div>
         <br />
         {% endif %}
-        <div class="btn" style="display: flex; gap: 0.5rem">
+        <div class="btn" style="display: flex; gap: 0.5rem; position: relative; left: 1%;">
           <a href="{% url 'home' %}" class="btn btn-secondary ml-5">Home</a>
           <button
             class="btn btn-secondary mx-0"
@@ -101,6 +142,7 @@
       url: "{% url 'cart_add'%}",
       data: {
         product_id: $("#add-cart").val(),
+        product_qty: $("#qty-cart option:selected").text(),
         csrfmiddlewaretoken: "{{ csrf_token }}",
         action: "post",
       },

@@ -65,9 +65,30 @@
           <!-- Product price for 50% off-->
           <strike> R {{ product.price }} </strike>
           &nbsp; R {{ product.half_price }} {% else %} R {{ product.price }} 
-          {% endif %}
+          {% endif %} <br> <br>
+          <div class="row justify-content-start">
+            <div class="col-md-2">Qty:</div>
+            <div class="col-md-4">
+              <select class="form-select form-select-sm" id="select{{ product.id }}">
+                  {% for key, value in quantities.items  %}
+                    {% if key == product.id|slugify %}
+                    <option selected> {{ value }} </option>
+                    {% endif %}
+                  {% endfor %}
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
         </div>
-        <a href="{% url 'home' %}" class="btn btn-secondary m-3 mt-0">Home</a>
+        </div>
+        <a href="{% url 'home' %}" class="btn btn-secondary m-3">Home</a>
+        <button type="button" data-index="{{ product.id }}"
+        class="btn btn-secondary update-cart">
+        Update
+        </button>
       </div>
     </div>
   </div>
@@ -81,3 +102,30 @@
 <br />
 <br />
 {% endblock %}
+
+<script>
+    $(document).on("click", ".update-cart", (ev) => {
+    ev.preventDefault();
+    // Grab the product id.
+    let productid = $(this).data("index");
+    
+    $.ajax({
+      type: "POST",
+      url: "{% url 'cart_add'%}",
+      data: {
+        product_id: $("#add-cart").val(),
+        product_qty: $("#qty-cart option:selected").text(),
+        csrfmiddlewaretoken: "{{ csrf_token }}",
+        action: "post",
+      },
+      success: function (json) {
+        // console.log(json);
+        let cartQty = document.getElementById("cart_quantity");
+        cartQty.textContent = json.qty;
+      },
+      error: (xhr, errmsg, err) => {},
+    });
+  });
+
+
+</script>
