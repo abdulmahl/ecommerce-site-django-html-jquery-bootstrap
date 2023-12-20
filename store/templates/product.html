@@ -1,4 +1,13 @@
 {% extends 'base.html' %} {% block content %}
+<!-- Header -->
+<header class="bg-dark py-5">
+  <div class="container px-4 px-lg-5 my-5">
+    <div class="text-center text-white">
+      <h1 class="display-4 fw-bolder">Product Details</h1>
+      <p class="lead fw-normal text-white-50 mb-0">Summary of your Product Details </p>
+    </div>
+  </div>
+</header>
 <center>
   <div class="container">
     <br /><br /><br />
@@ -112,13 +121,13 @@
         <br />
         {% endif %}
         <div class="btn" style="display: flex; gap: 0.5rem; position: relative; left: 1%;">
-          <a href="{% url 'home' %}" class="btn btn-secondary ml-5">Home</a>
+          <a href="{% url 'home' %}" class="btn btn-secondary ml-5" title="View Home Page">Home</a>
           <button
             class="btn btn-secondary mx-0"
             type="button"
             value="{{ product.id }}"
             id="add-cart"
-          >
+          title="Add Item To Your Cart">
             Add To Cart
           </button>
         </div>
@@ -128,9 +137,6 @@
     </div>
   </div>
 </center>
-<br /><br /><br />
-<br /><br /><br />
-<br /><br /><br />
 <br /><br /><br />
 
 <script>

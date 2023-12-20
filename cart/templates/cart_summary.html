@@ -84,16 +84,16 @@
             </div>
         </div>
         </div>
-        <a href="{% url 'home' %}" class="btn btn-secondary m-3">Home</a>
-        <button type="button" data-index="{{ product.id }}"
-        class="btn btn-secondary update-cart">
+        <a href="{% url 'home' %}" class="btn btn-secondary m-3" title="View Home Page">Home</a>
+        <button type="button" data-index="{{product.id}}"
+        class="btn btn-secondary update-cart" title="Update Quantity">
         Update
         </button>
       </div>
     </div>
   </div>
   {% endfor %} {% else %} <center> <div class="card border border-warning" style="max-width: 400px; padding: 2rem;">
-    <h3 style="padding-bottom: 1rem;">Your Cart is empty...</h3><center><a href="{% url 'home' %}" class="btn btn-warning" style="width: 60%;">Continue Shopping</a></center>
+    <h3 style="padding-bottom: 1rem;">Your Cart is empty...</h3><center><a href="{% url 'home' %}" class="btn btn-warning" style="width: 60%;" title="View Home Page">Continue Shopping</a></center>
   </div> </center>
   {% endif %}
 </div>
@@ -101,31 +101,31 @@
 <br />
 <br />
 <br />
-{% endblock %}
 
 <script>
-    $(document).on("click", ".update-cart", (ev) => {
+    $(document).on("click", ".update-cart", function(ev) {
     ev.preventDefault();
     // Grab the product id.
-    let productid = $(this).data("index");
-    
+    var productid = $(this).data("index");
+
     $.ajax({
       type: "POST",
-      url: "{% url 'cart_add'%}",
+      url: "{% url 'cart_update' %}",
       data: {
-        product_id: $("#add-cart").val(),
-        product_qty: $("#qty-cart option:selected").text(),
+        product_id: $(this).data("index"),
+        product_qty: $("#select" + productid + " option:selected").text(),
         csrfmiddlewaretoken: "{{ csrf_token }}",
         action: "post",
       },
-      success: function (json) {
+      success: function(json) {
         // console.log(json);
-        let cartQty = document.getElementById("cart_quantity");
-        cartQty.textContent = json.qty;
+        // let cartQty = document.getElementById("cart_quantity");
+        // cartQty.textContent = json.qty;
+        location.reload();
       },
-      error: (xhr, errmsg, err) => {},
+      error: function(xhr, errmsg, err) {},
     });
   });
-
-
 </script>
+
+{% endblock %}
