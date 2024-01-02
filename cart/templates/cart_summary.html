@@ -98,7 +98,7 @@
       </div>
     </div>
   </div>
-  {% endfor %} {% else %} <center> <div class="card border border-warning" style="max-width: 400px; padding: 2rem;">
+  {% endfor %} <h3>Total: ${{ totals }}</h3> {% else %} <center> <div class="card border border-warning" style="max-width: 400px; padding: 2rem;">
     <h3 style="padding-bottom: 1rem;">Your Cart is empty...</h3><center><a href="{% url 'home' %}" class="btn btn-warning" style="width: 60%;" title="View Home Page">Continue Shopping</a></center>
   </div> </center>
   {% endif %}
